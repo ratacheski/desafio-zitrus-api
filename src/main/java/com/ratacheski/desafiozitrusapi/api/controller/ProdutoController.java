@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping(path = "/produtos")
@@ -31,8 +33,20 @@ public class ProdutoController {
         var produtos = produtoService.listar();
         return produtos
                 .stream()
-                .map(produto -> mapStructMapper.ProdutoToProdutoDto(produto))
+                .map(mapStructMapper::ProdutoToProdutoDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/{codigo}")
+    public ProdutoDTO obterPorCodigo(@PathVariable UUID codigo){
+        var produto = produtoService.obterPorCodigo(codigo);
+        return mapStructMapper.ProdutoToProdutoDto(produto);
+    }
+
+    @DeleteMapping(path = "/{codigo}")
+    @ResponseStatus(NO_CONTENT)
+    public void delete(@PathVariable UUID codigo) {
+        produtoService.remover(codigo);
     }
 
     @PostMapping

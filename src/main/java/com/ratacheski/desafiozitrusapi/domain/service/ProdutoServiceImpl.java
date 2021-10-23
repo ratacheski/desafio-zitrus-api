@@ -44,6 +44,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public void remover(UUID codigo) {
+        obterPorCodigo(codigo);
         produtoRepository.deleteById(codigo);
     }
 }
