@@ -24,8 +24,11 @@ public class Produto {
     @ColumnDefault("random_uuid()")
     private UUID codigo;
 
+    @Column(nullable = false, unique = true)
     private String descricao;
 
+    @Enumerated
+    @Column(nullable = false)
     private TipoProduto tipo;
 
     private BigDecimal valorFornecedor;
