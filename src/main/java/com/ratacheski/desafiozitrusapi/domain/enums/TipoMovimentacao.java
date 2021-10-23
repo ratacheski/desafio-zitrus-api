@@ -1,9 +1,13 @@
 package com.ratacheski.desafiozitrusapi.domain.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.stream.Stream;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum TipoMovimentacao {
 
     ENTRADA(1, "Entrada"),
@@ -19,7 +23,9 @@ public enum TipoMovimentacao {
         this.descricao = descricao;
     }
 
-    public static TipoMovimentacao getByCodigo(Integer codigo) {
+
+    @JsonCreator
+    public static TipoMovimentacao getByCodigo(@JsonProperty("codigo") Integer codigo) {
         if (codigo == null)
             return null;
         return Stream.of(values())
