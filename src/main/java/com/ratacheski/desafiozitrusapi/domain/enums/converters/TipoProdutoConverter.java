@@ -1,6 +1,6 @@
-package com.ratacheski.desafiozitrusapi.enums.converters;
+package com.ratacheski.desafiozitrusapi.domain.enums.converters;
 
-import com.ratacheski.desafiozitrusapi.enums.TipoProduto;
+import com.ratacheski.desafiozitrusapi.domain.enums.TipoProduto;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

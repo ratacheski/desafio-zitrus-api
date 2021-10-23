@@ -1,7 +1,8 @@
-package com.ratacheski.desafiozitrusapi.model;
+package com.ratacheski.desafiozitrusapi.domain.model;
 
-import com.ratacheski.desafiozitrusapi.enums.TipoMovimentacao;
-import lombok.Data;
+import com.ratacheski.desafiozitrusapi.domain.enums.TipoMovimentacao;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -11,7 +12,9 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Table(name = "movimento_estoque")
 public class MovimentoEstoque {
 
     @Id
@@ -26,10 +29,8 @@ public class MovimentoEstoque {
 
     private TipoMovimentacao tipoMovimentacao;
 
-    @Column(name = "valor_venda")
     private BigDecimal valorVenda;
 
-    @Column(name = "data_venda")
     private OffsetDateTime dataVenda;
 
     @Column(name = "qtd_movimentada")

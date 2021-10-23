@@ -1,4 +1,4 @@
-package com.ratacheski.desafiozitrusapi.enums;
+package com.ratacheski.desafiozitrusapi.domain.enums;
 
 import lombok.Getter;
 

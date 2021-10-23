@@ -1,19 +1,19 @@
-package com.ratacheski.desafiozitrusapi.model;
+package com.ratacheski.desafiozitrusapi.domain.model;
 
-import com.ratacheski.desafiozitrusapi.enums.TipoProduto;
-import lombok.Data;
+import com.ratacheski.desafiozitrusapi.domain.enums.TipoProduto;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@Table(name = "produto")
 public class Produto {
 
     @Id
@@ -28,10 +28,9 @@ public class Produto {
 
     private TipoProduto tipo;
 
-    @Column(name = "valor_fornecedor")
     private BigDecimal valorFornecedor;
 
-    @Column(name = "quantidade_estoque")
+    @Column(name = "qtd_estoque")
     private BigDecimal quantidadeEstoque;
 
 }
