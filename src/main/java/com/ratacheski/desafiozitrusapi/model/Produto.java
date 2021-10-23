@@ -19,7 +19,7 @@ public class Produto {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID",
-            strategy = "org.hibernate.id.UUIDGENERATOR")
+            strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "codigo")
     @ColumnDefault("random_uuid()")
     private UUID codigo;
