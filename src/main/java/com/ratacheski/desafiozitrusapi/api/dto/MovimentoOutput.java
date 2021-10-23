@@ -13,6 +13,7 @@ import java.util.UUID;
 public class MovimentoOutput {
     private UUID id;
     private ProdutoMinimalDTO produto;
+    private BigDecimal valorCusto;
     private BigDecimal valor;
     private BigDecimal quantidade;
     private TipoMovimentacao tipoMovimentacao;

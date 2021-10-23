@@ -29,6 +29,12 @@ public class MovimentoEstoque {
 
     private TipoMovimentacao tipoMovimentacao;
 
+    /**
+     * Valor de custo para que se possa ter o armazenamento histórico do valor do
+     * produto no momento da venda
+     */
+    private BigDecimal valorCusto;
+
     private BigDecimal valorVenda;
 
     private OffsetDateTime dataVenda;

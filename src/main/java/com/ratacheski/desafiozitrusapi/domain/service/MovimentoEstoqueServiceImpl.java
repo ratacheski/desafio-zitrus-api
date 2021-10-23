@@ -2,6 +2,7 @@ package com.ratacheski.desafiozitrusapi.domain.service;
 
 import com.ratacheski.desafiozitrusapi.domain.enums.TipoMovimentacao;
 import com.ratacheski.desafiozitrusapi.domain.model.MovimentoEstoque;
+import com.ratacheski.desafiozitrusapi.domain.model.Produto;
 import com.ratacheski.desafiozitrusapi.domain.repository.MovimentoEstoqueRepository;
 import com.ratacheski.desafiozitrusapi.exception.BussinessException;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
     @Transactional
     public MovimentoEstoque movimentar(UUID codigoProduto, MovimentoEstoque movimentoEstoque) {
         var produto = produtoService.obterPorCodigo(codigoProduto);
+
+        popularMovimentoEstoque(movimentoEstoque, produto);
+
         if (movimentoEstoque.getTipoMovimentacao().equals(TipoMovimentacao.SAIDA)) {
             if (movimentoEstoque.getQuantidadeMovimentada().compareTo(produto.getQuantidadeEstoque()) > 0)
                 throw new BussinessException("Quantidade solicitada para saída maior que a disponível em estoque");
@@ -35,9 +39,15 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
             produto.setQuantidadeEstoque(
                     produto.getQuantidadeEstoque().add(movimentoEstoque.getQuantidadeMovimentada())
             );
+            //foi levado em conta que uma movimentação de entrada define um novo valor para o produto;
+            produto.setValorFornecedor(movimentoEstoque.getValorVenda());
         }
-        movimentoEstoque.setDataVenda(OffsetDateTime.now());
-        movimentoEstoque.setProduto(produto);
         return repository.save(movimentoEstoque);
+    }
+
+    private void popularMovimentoEstoque(MovimentoEstoque movimentoEstoque, Produto produto) {
+        movimentoEstoque.setDataVenda(OffsetDateTime.now());
+        movimentoEstoque.setValorCusto(produto.getValorFornecedor());
+        movimentoEstoque.setProduto(produto);
     }
 }

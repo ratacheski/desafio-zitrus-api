@@ -24,7 +24,8 @@ public interface MapStructMapper {
             @Mapping(target = "quantidadeMovimentada", source = "quantidade"),
             @Mapping(target = "dataVenda", ignore = true),
             @Mapping(target = "id", ignore = true),
-            @Mapping(target = "produto", ignore = true)
+            @Mapping(target = "produto", ignore = true),
+            @Mapping(target = "valorCusto", ignore = true)
     })
     MovimentoEstoque movimentoInputToMovimentoEstoque(MovimentoInput input);
 
