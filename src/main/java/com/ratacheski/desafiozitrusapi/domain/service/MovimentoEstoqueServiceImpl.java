@@ -1,5 +1,6 @@
 package com.ratacheski.desafiozitrusapi.domain.service;
 
+import com.ratacheski.desafiozitrusapi.api.dto.LucroProdutoDTO;
 import com.ratacheski.desafiozitrusapi.domain.enums.TipoMovimentacao;
 import com.ratacheski.desafiozitrusapi.domain.model.MovimentoEstoque;
 import com.ratacheski.desafiozitrusapi.domain.model.Produto;
@@ -41,8 +42,15 @@ public class MovimentoEstoqueServiceImpl implements MovimentoEstoqueService {
             );
             //foi levado em conta que uma movimentação de entrada define um novo valor para o produto;
             produto.setValorFornecedor(movimentoEstoque.getValorVenda());
+            movimentoEstoque.setValorVenda(null);
         }
         return repository.save(movimentoEstoque);
+    }
+
+    @Override
+    public LucroProdutoDTO obterLucroProduto(UUID codigoProduto) {
+        var produto = produtoService.obterPorCodigo(codigoProduto);
+        return repository.obterLucroProduto(produto);
     }
 
     private void popularMovimentoEstoque(MovimentoEstoque movimentoEstoque, Produto produto) {

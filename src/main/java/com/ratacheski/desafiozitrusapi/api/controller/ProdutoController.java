@@ -1,5 +1,6 @@
 package com.ratacheski.desafiozitrusapi.api.controller;
 
+import com.ratacheski.desafiozitrusapi.api.dto.LucroProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoPorTipoOut;
 import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;

@@ -1,5 +1,6 @@
 package com.ratacheski.desafiozitrusapi.api.controller;
 
+import com.ratacheski.desafiozitrusapi.api.dto.LucroProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.dto.MovimentoInput;
 import com.ratacheski.desafiozitrusapi.api.dto.MovimentoOutput;
 import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/produtos/{codigo}/estoque")
+@RequestMapping(path = "/produtos/{codigo}")
 public class EstoqueController {
 
     private final MovimentoEstoqueService service;
@@ -22,10 +23,15 @@ public class EstoqueController {
         this.mapper = mapper;
     }
 
-    @PostMapping
+    @PostMapping(path = "/estoque")
     public MovimentoOutput adicionarMovimentacaoEstoque(@PathVariable("codigo") UUID codigoProduto, @RequestBody MovimentoInput movimentoInput){
         var movimentoEstoque = service.movimentar(codigoProduto, mapper.movimentoInputToMovimentoEstoque(movimentoInput));
         return mapper.movimentoEstoqueToMovimentoOutput(movimentoEstoque);
+    }
+
+    @GetMapping(path = "/lucro")
+    public LucroProdutoDTO obterLucroProduto(@PathVariable("codigo") UUID codigoProduto){
+        return service.obterLucroProduto(codigoProduto);
     }
 
 }
