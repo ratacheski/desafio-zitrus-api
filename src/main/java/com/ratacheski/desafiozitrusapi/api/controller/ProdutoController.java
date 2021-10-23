@@ -1,6 +1,7 @@
 package com.ratacheski.desafiozitrusapi.api.controller;
 
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoDTO;
+import com.ratacheski.desafiozitrusapi.api.dto.ProdutoPorTipoOut;
 import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;
 import com.ratacheski.desafiozitrusapi.domain.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +60,10 @@ public class ProdutoController {
     public ProdutoDTO atualizar(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable UUID codigo) {
         var produto = produtoService.atualizar(codigo, mapStructMapper.produtoDtoToProduto(produtoDTO));
         return mapStructMapper.produtoToProdutoDto(produto);
+    }
+
+    @GetMapping(path = "/tipo/{tipo}")
+    public List<ProdutoPorTipoOut> consultarPorTipoComQuantidadeSaida(@PathVariable Integer tipo) {
+        return produtoService.consultarPorTipoComQuantidadeSaida(tipo);
     }
 }

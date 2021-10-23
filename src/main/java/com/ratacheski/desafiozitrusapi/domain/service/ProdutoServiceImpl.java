@@ -1,22 +1,31 @@
 package com.ratacheski.desafiozitrusapi.domain.service;
 
+import com.ratacheski.desafiozitrusapi.api.dto.ProdutoPorTipoOut;
+import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;
+import com.ratacheski.desafiozitrusapi.domain.enums.TipoProduto;
 import com.ratacheski.desafiozitrusapi.domain.model.Produto;
+import com.ratacheski.desafiozitrusapi.domain.repository.MovimentoEstoqueRepository;
 import com.ratacheski.desafiozitrusapi.domain.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
+    private final MovimentoEstoqueRepository estoqueRepository;
+    private final MapStructMapper mapper;
 
-    public ProdutoServiceImpl(ProdutoRepository produtoRepository) {
+    public ProdutoServiceImpl(ProdutoRepository produtoRepository, MovimentoEstoqueRepository estoqueRepository, MapStructMapper mapper) {
         this.produtoRepository = produtoRepository;
+        this.estoqueRepository = estoqueRepository;
+        this.mapper = mapper;
     }
 
 
@@ -49,5 +58,18 @@ public class ProdutoServiceImpl implements ProdutoService {
     public void remover(UUID codigo) {
         obterPorCodigo(codigo);
         produtoRepository.deleteById(codigo);
+    }
+
+    @Override
+    public List<ProdutoPorTipoOut> consultarPorTipoComQuantidadeSaida(Integer tipo) {
+        List<ProdutoPorTipoOut> outs = new ArrayList<>();
+        var produtos = produtoRepository.findProdutosByTipo(TipoProduto.getByCodigo(tipo));
+        produtos.forEach(produto -> {
+            var totalSaida = estoqueRepository.obterTotalSaidaPorProduto(produto.getCodigo());
+            var produtoPorTipoOut = mapper.produtoToProdutoPorTipoOut(produto);
+            produtoPorTipoOut.setQuantidadeSaida(totalSaida != null ? totalSaida : BigDecimal.ZERO);
+            outs.add(produtoPorTipoOut);
+        });
+        return outs;
     }
 }
