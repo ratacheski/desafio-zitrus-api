@@ -2,7 +2,6 @@ package com.ratacheski.desafiozitrusapi.api.controller;
 
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;
-import com.ratacheski.desafiozitrusapi.domain.model.Produto;
 import com.ratacheski.desafiozitrusapi.domain.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +32,14 @@ public class ProdutoController {
         var produtos = produtoService.listar();
         return produtos
                 .stream()
-                .map(mapStructMapper::ProdutoToProdutoDto)
+                .map(mapStructMapper::produtoToProdutoDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{codigo}")
     public ProdutoDTO obterPorCodigo(@PathVariable UUID codigo){
         var produto = produtoService.obterPorCodigo(codigo);
-        return mapStructMapper.ProdutoToProdutoDto(produto);
+        return mapStructMapper.produtoToProdutoDto(produto);
     }
 
     @DeleteMapping(path = "/{codigo}")
@@ -52,13 +51,13 @@ public class ProdutoController {
     @PostMapping
     @ResponseStatus(CREATED)
     public ProdutoDTO criar(@Valid @RequestBody ProdutoDTO produtoDTO) {
-        var produto = mapStructMapper.ProdutoDtoToProduto(produtoDTO);
-        return mapStructMapper.ProdutoToProdutoDto(produtoService.criar(produto));
+        var produto = mapStructMapper.produtoDtoToProduto(produtoDTO);
+        return mapStructMapper.produtoToProdutoDto(produtoService.criar(produto));
     }
 
     @PutMapping(path = "/{codigo}")
     public ProdutoDTO atualizar(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable UUID codigo) {
-        var produto = produtoService.atualizar(codigo, mapStructMapper.ProdutoDtoToProduto(produtoDTO));
-        return mapStructMapper.ProdutoToProdutoDto(produto);
+        var produto = produtoService.atualizar(codigo, mapStructMapper.produtoDtoToProduto(produtoDTO));
+        return mapStructMapper.produtoToProdutoDto(produto);
     }
 }

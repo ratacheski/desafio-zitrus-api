@@ -1,5 +1,6 @@
 package com.ratacheski.desafiozitrusapi.api.exceptionhandler;
 
+import com.ratacheski.desafiozitrusapi.exception.BussinessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EntityExistsException.class)
     public ResponseEntity<Object> handleEntityExistsException(EntityExistsException ex) {
+        ApiError apiError = new ApiError(BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError,apiError.getStatus());
+    }
+
+    @ExceptionHandler(BussinessException.class)
+    public ResponseEntity<Object> handleEntityExistsException(BussinessException ex) {
         ApiError apiError = new ApiError(BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<>(apiError,apiError.getStatus());
     }
