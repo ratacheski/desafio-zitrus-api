@@ -55,4 +55,10 @@ public class ProdutoController {
         var produto = mapStructMapper.ProdutoDtoToProduto(produtoDTO);
         return mapStructMapper.ProdutoToProdutoDto(produtoService.criar(produto));
     }
+
+    @PutMapping(path = "/{codigo}")
+    public ProdutoDTO atualizar(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable UUID codigo) {
+        var produto = produtoService.atualizar(codigo, mapStructMapper.ProdutoDtoToProduto(produtoDTO));
+        return mapStructMapper.ProdutoToProdutoDto(produto);
+    }
 }

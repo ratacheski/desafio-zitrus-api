@@ -9,6 +9,6 @@ public interface ProdutoService {
     List<Produto> listar();
     Produto obterPorCodigo(UUID codigo);
     Produto criar(Produto produto);
-    Produto atualizar(Produto produto);
+    Produto atualizar(UUID codigo, Produto produto);
     void remover(UUID codigo);
 }

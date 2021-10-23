@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,7 +39,9 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public Produto atualizar(Produto produto) {
+    public Produto atualizar(UUID codigo, Produto produto) {
+        var byId = obterPorCodigo(codigo);
+        produto.setCodigo(byId.getCodigo());
         return produtoRepository.save(produto);
     }
 
