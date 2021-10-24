@@ -4,6 +4,7 @@ import com.ratacheski.desafiozitrusapi.api.dto.LucroProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoDTO;
 import com.ratacheski.desafiozitrusapi.api.dto.ProdutoPorTipoOut;
 import com.ratacheski.desafiozitrusapi.api.mapper.MapStructMapper;
+import com.ratacheski.desafiozitrusapi.domain.enums.TipoProduto;
 import com.ratacheski.desafiozitrusapi.domain.service.ProdutoService;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,11 @@ public class ProdutoController {
                 .stream()
                 .map(mapStructMapper::produtoToProdutoDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/tipos")
+    public List<TipoProduto> listarTipos() {
+        return List.of(TipoProduto.values());
     }
 
     @GetMapping(path = "/{codigo}")
