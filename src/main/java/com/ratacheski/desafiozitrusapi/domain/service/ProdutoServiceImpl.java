@@ -6,6 +6,8 @@ import com.ratacheski.desafiozitrusapi.domain.enums.TipoProduto;
 import com.ratacheski.desafiozitrusapi.domain.model.Produto;
 import com.ratacheski.desafiozitrusapi.domain.repository.MovimentoEstoqueRepository;
 import com.ratacheski.desafiozitrusapi.domain.repository.ProdutoRepository;
+import com.ratacheski.desafiozitrusapi.exception.BussinessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -56,8 +58,12 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public void remover(UUID codigo) {
-        obterPorCodigo(codigo);
-        produtoRepository.deleteById(codigo);
+        var produto = obterPorCodigo(codigo);
+        try {
+            produtoRepository.deleteById(codigo);
+        } catch (DataIntegrityViolationException e) {
+            throw new BussinessException("Produto " + produto.getDescricao() +  "não pode ser excluído pois já joi movimentado");
+        }
     }
 
     @Override
