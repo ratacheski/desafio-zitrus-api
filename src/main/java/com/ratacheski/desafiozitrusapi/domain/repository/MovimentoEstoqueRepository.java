@@ -27,6 +27,6 @@ public interface MovimentoEstoqueRepository extends JpaRepository<MovimentoEstoq
             "from MovimentoEstoque m " +
             "where m.produto = :produto " +
             "and m.tipoMovimentacao = com.ratacheski.desafiozitrusapi.domain.enums.TipoMovimentacao.SAIDA " +
-            "")
+            "group by m.produto")
     LucroProdutoDTO obterLucroProduto(Produto produto);
 }

@@ -20,7 +20,7 @@ public class LucroProdutoDTO {
     public LucroProdutoDTO(Produto produto, BigDecimal totalLucro, BigDecimal quantidadeSaida) {
         this.codigo = produto.getCodigo();
         this.descricao = produto.getDescricao();
-        this.totalLucro = totalLucro.setScale(2, RoundingMode.HALF_UP);
+        this.totalLucro = totalLucro != null ? totalLucro.setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
         this.quantidadeSaida = quantidadeSaida;
     }
 }
